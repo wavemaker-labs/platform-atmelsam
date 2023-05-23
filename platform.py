@@ -71,15 +71,19 @@ class AtmelsamPlatform(PlatformBase):
             self.packages["framework-cmsis-atmel"]["optional"] = False
             if build_core in ("tuino0", "reprap"):
                 self.packages["framework-cmsis-atmel"]["version"] = "~1.1.0"
-            if build_core == "adafruit":
+            if build_core in ("adafruit", "teknic"):
                 self.packages["toolchain-gccarmnoneeabi"]["version"] = "~1.90301.0"
             if build_core in ("adafruit", "seeed"):
                 self.packages["framework-cmsis"]["version"] = "~2.50400.0"
+            if build_core in ("teknic"):
+                self.packages["framework-cmsis"]["version"] = "~1.40500.0"
+                # self.packages["toolchain-gccarmnoneeabi"]["version"] = "~1.60301.0"
+                # self.packages["framework-cmsis-atmel"]["version"] = "~1.2.0"
 
         if (
-            board.get("build.core", "") in ("adafruit", "seeed", "sparkfun")
+            board.get("build.core", "") in ("adafruit", "seeed", "sparkfun", "teknic")
             and "tool-bossac" in self.packages
-            and board.get("build.mcu", "").startswith(("samd51", "same51"))
+            and board.get("build.mcu", "").startswith(("samd51", "same51", "same53"))
         ):
             self.packages["tool-bossac"]["version"] = "~1.10900.0"
         if "zephyr" in variables.get("pioframework", []):

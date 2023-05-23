@@ -25,6 +25,7 @@ http://arduino.cc/en/Reference/HomePage
 import os
 
 from SCons.Script import DefaultEnvironment
+import json
 
 env = DefaultEnvironment()
 platform = env.PioPlatform()
@@ -37,8 +38,9 @@ assert MCU_FAMILY in ("sam", "samd")
 
 framework_package = "framework-arduino-" + MCU_FAMILY
 if board.get("build.core", "").lower() != "arduino":
-    framework_package += "-%s" % board.get("build.core").lower()
+  framework_package += "-%s" % board.get("build.core").lower()
 FRAMEWORK_DIR = platform.get_package_dir(framework_package)
+CORE = board.get("build.core").lower()
 
 assert os.path.isdir(FRAMEWORK_DIR)
 
@@ -46,6 +48,8 @@ machine_flags = [
     "-mcpu=%s" % board.get("build.cpu"),
     "-mthumb",
 ]
+
+teknic_libs = ["libclearcore.a"] if CORE == "teknic" else []
 
 env.Append(
     ASFLAGS=machine_flags,
@@ -92,7 +96,7 @@ env.Append(
         "-Wl,--warn-section-align"
     ],
 
-    LIBS=["m"]
+    LIBS=["m"] + teknic_libs
 )
 
 variants_dir = os.path.join(
@@ -100,23 +104,33 @@ variants_dir = os.path.join(
         "build.variants_dir", "") else os.path.join(FRAMEWORK_DIR, "variants")
 
 if not board.get("build.ldscript", ""):
-    env.Append(
-        LIBPATH=[
-            os.path.join(variants_dir, board.get("build.variant"), "linker_scripts", "gcc")
-        ]
-    )
-    env.Replace(
-        LDSCRIPT_PATH=board.get("build.arduino.ldscript", "")
-    )
+  env.Append(
+      LIBPATH=[
+          os.path.join(variants_dir, board.get("build.variant"), "linker_scripts", "gcc")
+      ]
+  )
+  env.Replace(
+      LDSCRIPT_PATH=board.get("build.arduino.ldscript", "")
+  )
+
+if CORE in ("teknic"):
+  env.Append(
+      LIBPATH=[
+          os.path.join(variants_dir, board.get("build.variant"), "lib")
+      ]
+  )
 
 if "build.usb_product" in board:
-    env.Append(
-        CPPDEFINES=[
-            ("USB_VID", board.get("build.hwids")[0][0]),
-            ("USB_PID", board.get("build.hwids")[0][1]),
-            ("USB_PRODUCT", '\\"%s\\"' %
-             board.get("build.usb_product", "").replace('"', "")),
-            ("USB_MANUFACTURER", '\\"%s\\"' %
-             board.get("vendor", "").replace('"', ""))
-        ]
-    )
+  env.Append(
+      CPPDEFINES=[
+          ("USB_VID", board.get("build.hwids")[0][0]),
+          ("USB_PID", board.get("build.hwids")[0][1]),
+          ("USB_PRODUCT", '\\"%s\\"' %
+           board.get("build.usb_product", "").replace('"', "")),
+          ("USB_MANUFACTURER", '\\"%s\\"' %
+           board.get("vendor", "").replace('"', ""))
+      ]
+  )
+
+print("### <<< ARDUINO COMMON ENV >>> ###")
+print(env.Dump())

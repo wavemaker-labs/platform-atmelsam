@@ -1,0 +1,50 @@
+{
+  "build": {
+    "arduino": {
+      "ldscript": "flash_with_bootloader.ld"
+    },
+    "core": "teknic",
+    "cpu": "cortex-m4",
+    "extra_flags": [
+      "-DARDUINO_ARM_ClearCore",
+      "-D__SAME53N19A__",
+      "-D__CLEARCORE__",
+      "-DARM_MATH_CM4",
+      "-D__ARM_FEATURE_DSP=1",
+      "-DCPPUTEST_USE_MEM_LEAK_DETECTION=0",
+      "-D__FPU_PRESENT=1",
+      "-DDEBUG"
+    ],
+    "f_cpu": "120000000L",
+    "hwids": [
+      ["0x2890", "0x0022"],
+      ["0x2890", "0x8022"]
+    ],
+    "mcu": "same53n19a",
+    "system": "samd",
+    "usb_product": "Teknic ClearCore",
+    "variant": "clearcore"
+  },
+  "debug": {
+    "jlink_device": "ATSAME53N19",
+    "openocd_chipname": "at91same53n19",
+    "openocd_target": "atsame5x",
+    "svd_path": "ATSAME53N19A.svd"
+  },
+  "frameworks": ["arduino"],
+  "name": "Teknic ClearCore",
+  "upload": {
+    "disable_flushing": true,
+    "maximum_ram_size": 196608,
+    "maximum_size": 507904,
+    "native_usb": true,
+    "offset_address": "0x4000",
+    "protocol": "sam-ba",
+    "protocols": ["sam-ba", "jlink", "atmel-ice"],
+    "require_upload_port": true,
+    "use_1200bps_touch": true,
+    "wait_for_upload_port": true
+  },
+  "url": "https://teknic.com/products/io-motion-controller/clcr-4-13",
+  "vendor": "Teknic"
+}

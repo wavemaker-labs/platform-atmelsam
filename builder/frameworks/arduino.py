@@ -40,3 +40,6 @@ if env.BoardConfig().get("build.core", "").lower() == "mbcwb":
             "framework-arduino-mbcwb"), "tools", "platformio-samd-build.py"))
 else:
     env.SConscript(os.path.join("arduino", "arduino-%s.py" % MCU_FAMILY))
+
+print("### <<< ARDUINO ENV >>> ###")
+print(env.Dump())

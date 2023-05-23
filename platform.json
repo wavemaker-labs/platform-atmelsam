@@ -61,6 +61,11 @@
       "owner": "platformio",
       "version": "~1.7.10"
     },
+    "framework-arduino-samd-teknic": {
+      "type": "framework",
+      "optional": true,
+      "version": "git@github.com:k-aguete/framework-arduino-samd-teknic.git#prebuilt-lib"
+    },
     "framework-arduino-samd-seeed": {
       "type": "framework",
       "optional": true,
@@ -109,11 +114,7 @@
     "framework-cmsis-atmel": {
       "type": "framework",
       "optional": true,
-      "owner": "platformio",
-      "version": "~1.2.2",
-      "optionalVersions": [
-        "~1.1.0"
-      ]
+      "version": "https://github.com/k-aguete/pio-packages/releases/download/v1.4.0-framework-cmsis-atmel/framework-cmsis-atmel-1.4.0.tar.gz"
     },
     "framework-arduino-mbcwb": {
       "type": "framework",
