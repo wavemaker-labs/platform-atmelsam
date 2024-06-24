@@ -64,7 +64,7 @@
     "framework-arduino-samd-teknic": {
       "type": "framework",
       "optional": true,
-      "version": "git@github.com:k-aguete/framework-arduino-samd-teknic.git#prebuilt-lib"
+      "version": "git@github.com:wavemaker-labs/framework-arduino-samd-teknic.git#prebuilt-lib"
     },
     "framework-arduino-samd-seeed": {
       "type": "framework",
@@ -114,7 +114,7 @@
     "framework-cmsis-atmel": {
       "type": "framework",
       "optional": true,
-      "version": "git@github.com:k-aguete/ArduinoModule-CMSIS-Atmel.git#main"
+      "version": "git@github.com:wavemaker-labs/ArduinoModule-CMSIS-Atmel.git#main"
     },
     "framework-arduino-mbcwb": {
       "type": "framework",
